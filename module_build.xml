@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="module_json-java" default="compile.module.json-java">
-  <dirname property="module.json-java.basedir" file="/module_build.xml"/>
+  <dirname property="module.json-java.basedir" file="module_build.xml"/>
   
   <property name="module.jdk.home.json-java" value="${project.jdk.home}"/>
   <property name="module.jdk.bin.json-java" value="${project.jdk.bin}"/>

@@ -90,7 +90,7 @@
 
   <!-- Modules -->
   
-  <import file="/module_build.xml"/>
+  <import file="module_build.xml"/>
   
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
@@ -98,7 +98,7 @@
   
   <target name="clean" depends="clean.module.json-java" description="cleanup modules"/>
 
-  <target name="clean-all" depends="clean" description="cleanup all">
+  <target name="clean.all" depends="clean" description="cleanup all">
       <delete dir="${basedir}/target" />
   </target>
 
