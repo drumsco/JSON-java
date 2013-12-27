@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_json-java" default="compile.module.json-java">
+  <dirname property="module.json-java.basedir" file="/module_build.xml"/>
+  
+  <property name="module.jdk.home.json-java" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.json-java" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.json-java" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.json-java" value="${compiler.args}"/>
+  
+  <property name="json-java.output.dir" value="${module.json-java.basedir}/target/production/JSON-java"/>
+  <property name="json-java.testoutput.dir" value="${module.json-java.basedir}/target/test/JSON-java"/>
+  
+  <path id="json-java.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="json-java.module.production.classpath">
+    <path refid="${module.jdk.classpath.json-java}"/>
+  </path>
+  
+  <path id="json-java.runtime.production.module.classpath">
+    <pathelement location="${json-java.output.dir}"/>
+  </path>
+  
+  <path id="json-java.module.classpath">
+    <path refid="${module.jdk.classpath.json-java}"/>
+    <pathelement location="${json-java.output.dir}"/>
+  </path>
+  
+  <path id="json-java.runtime.module.classpath">
+    <pathelement location="${json-java.testoutput.dir}"/>
+    <pathelement location="${json-java.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.json-java">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.json-java">
+    <patternset refid="excluded.from.module.json-java"/>
+  </patternset>
+  
+  <path id="json-java.module.sourcepath">
+    <dirset dir="${module.json-java.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="json-java.module.test.sourcepath">
+    <dirset dir="${module.json-java.basedir}">
+      <include name="src/test/java"/>
+      <include name="src/test/resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.json-java"
+          depends="compile.module.json-java.production,compile.module.json-java.tests"
+          description="Compile module JSON-java"/>
+  
+  <target name="compile.module.json-java.production"
+          description="Compile module JSON-java; production classes">
+    <mkdir dir="${json-java.output.dir}"/>
+    <javac destdir="${json-java.output.dir}"
+            debug="${compiler.debug}"
+            nowarn="${compiler.generate.no.warnings}"
+            memorymaximumsize="${compiler.max.memory}"
+            target="${compiler.build.target}"
+            source="${compiler.build.source}"
+            fork="true" executable="${module.jdk.bin.json-java}/javac">
+      <compilerarg line="${compiler.args.json-java}"/>
+      <bootclasspath refid="json-java.module.bootclasspath"/>
+      <classpath refid="json-java.module.production.classpath"/>
+      <src refid="json-java.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.json-java"/>
+    </javac>
+    
+    <copy todir="${json-java.output.dir}">
+      <fileset dir="${module.json-java.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.json-java.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.json-java.tests"
+          depends="compile.module.json-java.production"
+          description="compile module JSON-java; test classes"
+          unless="skip.tests">
+    <mkdir dir="${json-java.testoutput.dir}"/>
+    <javac destdir="${json-java.testoutput.dir}"
+            debug="${compiler.debug}"
+            nowarn="${compiler.generate.no.warnings}"
+            memorymaximumsize="${compiler.max.memory}"
+            target="${compiler.build.target}"
+            source="${compiler.build.source}"
+            fork="true"
+            executable="${module.jdk.bin.json-java}/javac">
+      <compilerarg line="${compiler.args.json-java}"/>
+      <bootclasspath refid="json-java.module.bootclasspath"/>
+      <classpath refid="json-java.module.classpath"/>
+      <src refid="json-java.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.json-java"/>
+    </javac>
+    
+    <copy todir="${json-java.testoutput.dir}">
+      <fileset dir="${module.json-java.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.json-java.basedir}/src/test/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.json-java" description="cleanup module">
+    <delete dir="${json-java.output.dir}"/>
+    <delete dir="${json-java.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,3 @@
+path.variable.maven_repository=/YOUR/HOME/.m2/repository
+jdk.home.1.6=/YOUR/JAVA/HOME
+javac2.instrumentation.includeJavaRuntime=false
